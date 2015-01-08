@@ -13,6 +13,9 @@ You must have `python` version 3.4 or higher to run this script, for Python enum
 # Why
 I wanted this software because the ability to use different dictionaries is important to me. `/usr/share/dict/words` isn't a Scrabble Competition dictionary.
 
+# Don't Cheat
+Cheating while you're playing Words With Friends isn't fulfilling. I intend this tool to be a lightweight, free replacement for WWF's Hindsight, where you can enter your hand and a letter from where you were trying to play, and see what you might have played. Actually playing words that you couldn't come up with isn't nice. Learning to play better next time is.
+
 # Thanks
 - Thanks to [ScrabbleHelper](https://code.google.com/p/scrabblehelper/), a more complicated Java project, for the SOWPODS and TWL dictionary files.
 - Thanks to [Blog My Brain](http://blogmybrain.com/words-with-friends-cheat/words-with-friends-dictionary.php) for the [Words With Friends](https://zynga.com/games/words-friends) dictionary.
