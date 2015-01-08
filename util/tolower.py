@@ -7,10 +7,10 @@
     downloaded dictionaries.
 """
 
-iname = 'dict/TWL06.txt'
-oname = 'dict/twl.txt'
+inname = 'dict/TWL06.txt'
+outname = 'dict/twl.txt'
 
-with open(iname, 'r') as ifile:
-    with open(oname, 'w') as ofile:
-        for line in ifile:
-            ofile.write(line.lower())
+with open(inname, 'r') as infile:
+    with open(outname, 'w') as outfile:
+        for line in infile:
+            outfile.write(line.lower())
