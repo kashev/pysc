@@ -8,7 +8,7 @@
 """
 
 iname = 'dict/TWL06.txt'
-oname = 'dict/twl06.txt'
+oname = 'dict/twl.txt'
 
 with open(iname, 'r') as ifile:
     with open(oname, 'w') as ofile:
