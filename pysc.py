@@ -7,9 +7,10 @@
 
 # IMPORTS
 import argparse
-import enum
 import collections
+import enum
 import itertools
+import json
 
 
 @enum.unique
@@ -35,14 +36,31 @@ def load_anagram_dict(scrabble_dictionary):
     return anagram_dict
 
 
+def load_scoring_dict(scrabble_dictionary):
+    """ Load the scoring dictionary. """
+    SCORE_PATH = "dict/scores.json"
+    with open(SCORE_PATH, 'r') as score_file:
+        score_dict = json.loads(score_file.read())
+        if scrabble_dictionary is ScrabbleDictionary.wwf:
+            return score_dict["wwf"]
+        else:
+            return score_dict["scrabble"]
+
+
+def score_word(word, score_dict):
+    """ Given a word, score it using the scoring dicitonary. """
+    return sum([score_dict[letter] for letter in word])
+
+
 def find_words(letters, anagram_dict):
+    """ Find all the words that can be made from the given letters. """
     letters = ''.join(sorted(letters))
     target_words = []
     for word_length in range(2, len(letters) + 1):
         for combination in itertools.combinations(letters, word_length):
             if combination in anagram_dict:
                 target_words += anagram_dict[combination]
-    return target_words
+    return set(target_words)
 
 
 def main():
@@ -66,9 +84,11 @@ def main():
     args = parser.parse_args()
 
     anagram_dict = load_anagram_dict(args.sdict)
+    score_dict = load_scoring_dict(args.sdict)
     target_words = find_words(args.letters, anagram_dict)
 
-    print(target_words)
+    for word in target_words:
+        print("{} | {}".format(word, score_word(word, score_dict)))
 
 
 if __name__ == '__main__':
