@@ -97,7 +97,7 @@ def main():
              for word in target_words]
     words.sort(key=lambda x: x[1], reverse=True)
 
-    headers = ["words", "scores", "length"]
+    headers = ["word", "score", "length"]
 
     if pretty_print:
         table = tabulate(words, headers=headers)
