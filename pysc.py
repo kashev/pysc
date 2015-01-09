@@ -11,6 +11,7 @@ import collections
 import enum
 import itertools
 import json
+from tabulate import tabulate
 
 
 @enum.unique
@@ -87,8 +88,12 @@ def main():
     score_dict = load_scoring_dict(args.sdict)
     target_words = find_words(args.letters.lower(), anagram_dict)
 
-    for word in target_words:
-        print("{} | {}".format(word, score_word(word, score_dict)))
+    words = [[word, score_word(word, score_dict), len(word)]
+             for word in target_words]
+    words.sort(key=lambda x: x[1], reverse=True)
+
+    table = tabulate(words, headers=["words", "scores", "length"])
+    print(table)
 
 
 if __name__ == '__main__':
