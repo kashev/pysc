@@ -22,8 +22,8 @@ class ScrabbleDictionary(enum.Enum):
 
 def load_anagram_dict(scrabble_dictionary):
     """ Load the scrabble dictionary of choice. """
-    DICT_PRE = "dict/anagram_"
-    DICT_EXT = ".txt"
+    DICT_PRE = "dict/"
+    DICT_EXT = "_anagram.txt"
     dict_path = DICT_PRE + scrabble_dictionary.value + DICT_EXT
 
     anagram_dict = collections.defaultdict(list)
@@ -65,7 +65,8 @@ def main():
 
     args = parser.parse_args()
 
-    target_words = find_words(args.letters, load_anagram_dict(args.sdict))
+    anagram_dict = load_anagram_dict(args.sdict)
+    target_words = find_words(args.letters, anagram_dict)
 
     print(target_words)
 

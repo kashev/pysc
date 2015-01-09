@@ -42,7 +42,7 @@ def main():
 
     for sd in ["sowpods", "twl", "wwf"]:
         infile = '../dict/{}.txt'.format(sd)
-        outfile = '../dict/anagram_{}.txt'.format(sd)
+        outfile = '../dict/{}_anagram.txt'.format(sd)
         build_anagram_dict(infile, outfile)
 
 if __name__ == '__main__':
