@@ -85,7 +85,7 @@ def main():
 
     anagram_dict = load_anagram_dict(args.sdict)
     score_dict = load_scoring_dict(args.sdict)
-    target_words = find_words(args.letters, anagram_dict)
+    target_words = find_words(args.letters.lower(), anagram_dict)
 
     for word in target_words:
         print("{} | {}".format(word, score_word(word, score_dict)))
