@@ -8,10 +8,8 @@
 # IMPORTS
 import argparse
 import enum
-
-# CONSTANTS
-DICT_PATH = "dict/"
-DICT_EXT = ".txt"
+import collections
+import itertools
 
 
 @enum.unique
@@ -20,6 +18,31 @@ class ScrabbleDictionary(enum.Enum):
     sowpods = "sowpods"
     twl = "twl"
     wwf = "wwf"
+
+
+def load_anagram_dict(scrabble_dictionary):
+    """ Load the scrabble dictionary of choice. """
+    DICT_PRE = "dict/anagram_"
+    DICT_EXT = ".txt"
+    dict_path = DICT_PRE + scrabble_dictionary.value + DICT_EXT
+
+    anagram_dict = collections.defaultdict(list)
+    with open(dict_path, 'r') as dict_file:
+        for line in dict_file:
+            words = line.split()
+            anagram_dict[tuple(words[0])] = words[1:]
+
+    return anagram_dict
+
+
+def find_words(letters, anagram_dict):
+    letters = ''.join(sorted(letters))
+    target_words = []
+    for word_length in range(2, len(letters) + 1):
+        for combination in itertools.combinations(letters, word_length):
+            if combination in anagram_dict:
+                target_words += anagram_dict[combination]
+    return target_words
 
 
 def main():
@@ -42,7 +65,9 @@ def main():
 
     args = parser.parse_args()
 
-    dict_file = DICT_PATH + args.sdict.value + DICT_EXT
+    target_words = find_words(args.letters, load_anagram_dict(args.sdict))
+
+    print(target_words)
 
 
 if __name__ == '__main__':
