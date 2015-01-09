@@ -7,11 +7,11 @@ pysc
 
 A Scrabble cheater written in Python. Includes multiple dictionaries, including SOWPODS and the Words With Friends Dictionary.
 
-# Requirements
-You must have `python` version 3.4 or higher to run this script, for Python enumerations.
-
 # Why
 I wanted this software because the ability to use different dictionaries is important to me. `/usr/share/dict/words` isn't a Scrabble Competition dictionary.
+
+# Requirements
+You must have `python` version 3.4 or higher to run this script, for Python enumerations. Additionally, the package [`tabluate`](https://bitbucket.org/astanin/python-tabulate) is required for pretty printing.
 
 # Instructions
 Create the virtual enviornment (using `virtualenvwrapper`) by running `mkvirtualenv pysc -p /usr/bin/python3`. Run the script by running `./pysc [letters]`. Run `./pysc -h` for more options.
@@ -25,3 +25,4 @@ Cheating while you're playing Words With Friends isn't fulfilling. I intend this
 - Thanks to [Justin Peel](http://stackoverflow.com/users/254617/justin-peel) for his useful analysis of this problem on [Stack Overflow](http://stackoverflow.com/a/5521619/1473320).
 - Thanks to [Jeff Knupp]() for [even](http://www.jeffknupp.com/blog/2013/01/04/creating-and-optimizing-a-letterpress-cheating-program-in-python/) [more](https://github.com/jeffknupp/presser) useful work on a similar problem.
 - Thanks to [James Sweet](http://nojesusnopeas.blogspot.com/) for his table of [Scrabble and Words With Friends letter scores](http://nojesusnopeas.blogspot.com/2012/03/differences-between-words-with-friends.html).
+- Thanks to [Sergey Astanin and the tabluate team](https://bitbucket.org/astanin/python-tabulate) for [tabluate](https://pypi.python.org/pypi/tabulate/).

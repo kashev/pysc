@@ -11,7 +11,12 @@ import collections
 import enum
 import itertools
 import json
-from tabulate import tabulate
+
+try:
+    from tabulate import tabulate
+    pretty_print = True
+except ImportError as e:
+    pretty_print = False
 
 
 @enum.unique
@@ -92,8 +97,16 @@ def main():
              for word in target_words]
     words.sort(key=lambda x: x[1], reverse=True)
 
-    table = tabulate(words, headers=["words", "scores", "length"])
-    print(table)
+    headers = ["words", "scores", "length"]
+
+    if pretty_print:
+        table = tabulate(words, headers=headers)
+        print(table)
+
+    else:
+        print("{} | {} | {}".format(headers[0], headers[1], headers[2]))
+        for word in words:
+            print("{} | {} | {}".format(word[0], word[1], word[2]))
 
 
 if __name__ == '__main__':
