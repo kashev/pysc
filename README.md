@@ -21,3 +21,4 @@ Cheating while you're playing Words With Friends isn't fulfilling. I intend this
 - Thanks to [Blog My Brain](http://blogmybrain.com/words-with-friends-cheat/words-with-friends-dictionary.php) for the [Words With Friends](https://zynga.com/games/words-friends) dictionary.
 - Thanks to [Justin Peel](http://stackoverflow.com/users/254617/justin-peel) for his useful analysis of this problem on [Stack Overflow](http://stackoverflow.com/a/5521619/1473320).
 - Thanks to [Jeff Knupp]() for [even](http://www.jeffknupp.com/blog/2013/01/04/creating-and-optimizing-a-letterpress-cheating-program-in-python/) [more](https://github.com/jeffknupp/presser) useful work on a similar problem.
+- Thanks to [James Sweet](http://nojesusnopeas.blogspot.com/) for his table of [Scrabble and Words With Friends letter scores](http://nojesusnopeas.blogspot.com/2012/03/differences-between-words-with-friends.html).
