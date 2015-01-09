@@ -17,10 +17,13 @@ def build_anagram_dict(infile, outfile):
         words = collections.defaultdict(list)
         letters = set(string.ascii_lowercase + '\n')
         for word in file_handle:
-            if len(set(word) - letters) == 0:
+            # Check to see if the word contains only letters in the set
+            # (no apostraphies, only an issue if using a poor dictionary)
+            # and that the word is of a reasonable length
+            if len(set(word) - letters) == 0 and len(word) < 20 or True:
                 word = word.strip()
-                key = ''.join(sorted(word))
-                words[key].append(word)
+                letter_key = ''.join(sorted(word))
+                words[letter_key].append(word)
 
     anagram_dictionary = [' '.join([key] + value)
                           for key, value in words.items()]
