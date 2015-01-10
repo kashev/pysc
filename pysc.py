@@ -10,7 +10,9 @@ import argparse
 import collections
 import enum
 import itertools
+import itertools
 import json
+import string
 
 try:
     from tabulate import tabulate
@@ -62,14 +64,16 @@ def find_words(letters, anagram_dict):
     """ Find all the words that can be made from the given letters. """
     BLANK = '.'
 
-    blanks = letters.count(BLANK)
-    letters = ''.join(sorted(letters)).replace(BLANK, '')
+    num_blanks = letters.count(BLANK)
+    non_blank_letters = ''.join(sorted(letters)).replace(BLANK, '')
 
     target_words = []
-    for word_length in range(2, len(letters) + 1):
-        for combination in itertools.combinations(letters, word_length):
-            if combination in anagram_dict:
-                target_words += anagram_dict[combination]
+    for blanks in itertools.product(string.ascii_lowercase, repeat=num_blanks):
+        letters = sorted(non_blank_letters + ''.join(sorted(blanks)))
+        for word_length in range(2, len(letters) + 1):
+            for combination in itertools.combinations(letters, word_length):
+                if combination in anagram_dict:
+                    target_words += anagram_dict[combination]
     return set(target_words)
 
 
