@@ -11,10 +11,10 @@ A Scrabble cheater written in Python. Includes multiple dictionaries, including 
 I wanted this software because the ability to use different dictionaries is important to me. `/usr/share/dict/words` isn't a Scrabble Competition dictionary.
 
 # Requirements
-You must have `python` version 3.4 or higher to run this script, for Python enumerations. Additionally, the package [`tabluate`](https://bitbucket.org/astanin/python-tabulate) is required for pretty printing.
+You must have `python` version 3.4 or higher to run this script, for Python enumerations. Additionally, the package [`tabluate`](https://bitbucket.org/astanin/python-tabulate) is required for pretty printing, but isn't strictly required to run the script.
 
 # Instructions
-Create the virtual enviornment (using `virtualenvwrapper`) by running `mkvirtualenv pysc -p /usr/bin/python3`. Run the script by running `./pysc [letters]`. Run `./pysc -h` for more options.
+Create the virtual enviornment (using [`virtualenvwrapper`](virtualenvwrapper.readthedocs.org/en/latest/)) by running `mkvirtualenv pysc -p /usr/bin/python3`. Run the script by running `./pysc [letters]`. Run `./pysc -h` for more options.
 
 # Don't Cheat
 Cheating while you're playing Words With Friends isn't fulfilling. I intend this tool to be a lightweight, free replacement for WWF's Hindsight, where you can enter your hand and a letter from where you were trying to play, and see what you might have played. Actually playing words that you couldn't come up with isn't nice. Learning to play better next time is.
