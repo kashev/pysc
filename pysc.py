@@ -60,7 +60,11 @@ def score_word(word, score_dict):
 
 def find_words(letters, anagram_dict):
     """ Find all the words that can be made from the given letters. """
-    letters = ''.join(sorted(letters))
+    BLANK = '.'
+
+    blanks = letters.count(BLANK)
+    letters = ''.join(sorted(letters)).replace(BLANK, '')
+
     target_words = []
     for word_length in range(2, len(letters) + 1):
         for combination in itertools.combinations(letters, word_length):
