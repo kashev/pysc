@@ -25,7 +25,7 @@ Install the only requirement by running `pip install tabulate`.
 The script will fall back on 'ugly' printing.
 
 # Usage
-Run the script by running `./pysc [letters]`. Run `./pysc -h` for more options. `[letters]` may contain blank spaces by using the `.` character, but know that this slows down execution.
+Run the script by running `./pysc letters`. `letters` may contain blank spaces by using the `.` character, but know that this slows down execution. The `-r` flag can be used to add required letters to the word. Note that the required letters should not also be included in the `letters` argument. Run `./pysc -h` for more details.
 
 # Don't Cheat
 Cheating while you're playing Words With Friends isn't fulfilling. I intend this tool to be a lightweight, free replacement for WWF's Hindsight, where you can enter your hand and a letter from where you were trying to play, and see what you might have played. Actually playing words that you couldn't come up with isn't nice. Learning to play better next time is.

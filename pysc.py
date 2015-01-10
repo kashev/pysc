@@ -39,6 +39,16 @@ class Word:
                 letter_list.remove(letter)
                 self.score += score_dict[letter]
 
+    def has_letters(self, required_letters):
+        required_list = list(required_letters)
+        letter_list = list(self.word)
+        for letter in required_list:
+            try:
+                letter_list.remove(letter)
+            except ValueError:
+                return False
+        return True
+
 
 def load_anagram_dict(scrabble_dictionary):
     """ Load the scrabble dictionary of choice. """
@@ -71,12 +81,12 @@ def score_word(word, score_dict):
     return sum([score_dict[letter] for letter in word])
 
 
-def find_words(letters, anagram_dict, score_dict):
+def find_words(letters, required, anagram_dict, score_dict):
     """ Find all the words that can be made from the given letters. """
     BLANK = '.'
 
     num_blanks = letters.count(BLANK)
-    non_blank_letters = ''.join(sorted(letters)).replace(BLANK, '')
+    non_blank_letters = ''.join(sorted(letters + required)).replace(BLANK, '')
 
     target_word_dict = {}
     for blanks in itertools.product(string.ascii_lowercase, repeat=num_blanks):
@@ -87,6 +97,10 @@ def find_words(letters, anagram_dict, score_dict):
                     for target_string in anagram_dict[combination]:
                         target_word = Word(target_string, non_blank_letters,
                                            score_dict)
+                        # Ensure the word has required letters.
+                        if not target_word.has_letters(required):
+                            continue
+
                         # Add the word if it doesn't exist
                         if target_string not in target_word_dict:
                             target_word_dict[target_string] = target_word
@@ -114,6 +128,8 @@ def main():
     parser.add_argument("-d", "--sdict", help=helpstring,
                         type=ScrabbleDictionary,
                         default=ScrabbleDictionary.wwf)
+    parser.add_argument("-r", "--required", type=str, default="",
+                        help="required letters, must be in the word")
 
     parser.add_argument("letters", type=str,
                         help="Letters from which words will be made")
@@ -122,8 +138,8 @@ def main():
 
     anagram_dict = load_anagram_dict(args.sdict)
     score_dict = load_scoring_dict(args.sdict)
-    target_word_dict = find_words(args.letters.lower(), anagram_dict,
-                                  score_dict)
+    target_word_dict = find_words(args.letters.lower(), args.required.lower(),
+                                  anagram_dict, score_dict)
 
     words = [[word.word, word.score, len(word.word)]
              for key, word in target_word_dict.items()]
