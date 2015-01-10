@@ -11,6 +11,7 @@ import collections
 import enum
 import itertools
 import json
+import string
 
 try:
     from tabulate import tabulate
@@ -25,6 +26,18 @@ class ScrabbleDictionary(enum.Enum):
     sowpods = "sowpods"
     twl = "twl"
     wwf = "wwf"
+
+
+class Word:
+    """ A class for words, which helps keep track of word score. """
+    def __init__(self, word, letters, score_dict):
+        self.word = word
+        self.score = 0
+        letter_list = list(letters)
+        for letter in word:
+            if letter in letter_list:
+                letter_list.remove(letter)
+                self.score += score_dict[letter]
 
 
 def load_anagram_dict(scrabble_dictionary):
@@ -58,15 +71,33 @@ def score_word(word, score_dict):
     return sum([score_dict[letter] for letter in word])
 
 
-def find_words(letters, anagram_dict):
+def find_words(letters, anagram_dict, score_dict):
     """ Find all the words that can be made from the given letters. """
-    letters = ''.join(sorted(letters))
-    target_words = []
-    for word_length in range(2, len(letters) + 1):
-        for combination in itertools.combinations(letters, word_length):
-            if combination in anagram_dict:
-                target_words += anagram_dict[combination]
-    return set(target_words)
+    BLANK = '.'
+
+    num_blanks = letters.count(BLANK)
+    non_blank_letters = ''.join(sorted(letters)).replace(BLANK, '')
+
+    target_word_dict = {}
+    for blanks in itertools.product(string.ascii_lowercase, repeat=num_blanks):
+        letters = sorted(non_blank_letters + ''.join(sorted(blanks)))
+        for word_length in range(2, len(letters) + 1):
+            for combination in itertools.combinations(letters, word_length):
+                if combination in anagram_dict:
+                    for target_string in anagram_dict[combination]:
+                        target_word = Word(target_string, non_blank_letters,
+                                           score_dict)
+                        # Add the word if it doesn't exist
+                        if target_string not in target_word_dict:
+                            target_word_dict[target_string] = target_word
+                        # Otherwise only add the word if the new version is
+                        # higher scoring.
+                        else:
+                            if (target_word_dict[target_string].score <
+                                    target_word.score):
+                                target_word_dict[target_string] = target_word
+
+    return target_word_dict
 
 
 def main():
@@ -91,10 +122,11 @@ def main():
 
     anagram_dict = load_anagram_dict(args.sdict)
     score_dict = load_scoring_dict(args.sdict)
-    target_words = find_words(args.letters.lower(), anagram_dict)
+    target_word_dict = find_words(args.letters.lower(), anagram_dict,
+                                  score_dict)
 
-    words = [[word, score_word(word, score_dict), len(word)]
-             for word in target_words]
+    words = [[word.word, word.score, len(word.word)]
+             for key, word in target_word_dict.items()]
     words.sort(key=lambda x: x[1], reverse=True)
 
     headers = ["word", "score", "length"]
