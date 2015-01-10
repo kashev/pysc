@@ -81,7 +81,7 @@ def score_word(word, score_dict):
     return sum([score_dict[letter] for letter in word])
 
 
-def find_words(letters, required, anagram_dict, score_dict):
+def find_words(letters, anagram_dict, score_dict, required="", length=None):
     """ Find all the words that can be made from the given letters. """
     BLANK = '.'
 
@@ -91,7 +91,14 @@ def find_words(letters, required, anagram_dict, score_dict):
     target_word_dict = {}
     for blanks in itertools.product(string.ascii_lowercase, repeat=num_blanks):
         letters = sorted(non_blank_letters + ''.join(sorted(blanks)))
-        for word_length in range(2, len(letters) + 1):
+
+        # pick length range
+        if length is None:
+            length_range = range(2, len(letters) + 1)
+        else:
+            length_range = [length]
+
+        for word_length in length_range:
             for combination in itertools.combinations(letters, word_length):
                 if combination in anagram_dict:
                     for target_string in anagram_dict[combination]:
@@ -130,6 +137,8 @@ def main():
                         default=ScrabbleDictionary.wwf)
     parser.add_argument("-r", "--required", type=str, default="",
                         help="required letters, must be in the word")
+    parser.add_argument("-l", "--length", type=int, default=None,
+                        help="length of desired words")
 
     parser.add_argument("letters", type=str,
                         help="Letters from which words will be made")
@@ -138,8 +147,9 @@ def main():
 
     anagram_dict = load_anagram_dict(args.sdict)
     score_dict = load_scoring_dict(args.sdict)
-    target_word_dict = find_words(args.letters.lower(), args.required.lower(),
-                                  anagram_dict, score_dict)
+    target_word_dict = find_words(args.letters.lower(), anagram_dict,
+                                  score_dict, args.required.lower(),
+                                  args.length)
 
     words = [[word.word, word.score, len(word.word)]
              for key, word in target_word_dict.items()]
